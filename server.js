@@ -14,7 +14,7 @@ app.use(bodyParser.json({
 
 app.use(express.static('public'))
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public/fototkp/', express.static(path.join(__dirname, '/public/fototkp')));
+app.use('/public/Image/', express.static(path.join(__dirname, '/public/Image')));
 
 app.use(bodyParser.urlencoded({
     limit: '50mb',
