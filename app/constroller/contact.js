@@ -8,8 +8,9 @@ exports.Contacts = (req, responce) => {
             b.isFavorites 
             FROM contact a 
             LEFT JOIN favorites b 
-            ON a.id = b.user_id group 
-            by a.id ORDER BY a.createdAt DESC`, (err, res) => {
+            ON a.id = b.user_id 
+            where flag='0'
+            group by a.id ORDER BY a.createdAt DESC`, (err, res) => {
 
         if (res.length > 0) {
             const avt = {}
@@ -138,6 +139,19 @@ exports.UpdateContacts = (req, res) => {
         res.status(200).send({
             status: true,
             message: 'success updated',
+        });
+    });
+};
+
+exports.DeleteContacts = (req, res) => {
+    const {id}= req.params;
+    
+    let query = `UPDATE contact SET  flag='1' where id='${id}'`;
+    sql.query(query, function (err, result) {
+        if (err) throw err;
+        res.status(200).send({
+            status: true,
+            message: 'success deleted',
         });
     });
 };

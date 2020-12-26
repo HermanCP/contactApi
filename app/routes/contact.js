@@ -37,4 +37,9 @@ module.exports = app => {
         upload.single('files'),
         constroller.UpdateContacts
     );
+    app.delete(
+        `${URL}/DeleteContacts/:id`,
+        upload.single('files'),
+        constroller.DeleteContacts
+    );
 };
