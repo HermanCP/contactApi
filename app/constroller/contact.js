@@ -47,7 +47,8 @@ exports.AddContacts = (req, res) => {
         "mobile": mobile,
         "avatar": path_file,
         "email": email,
-        "createdAt":new Date()
+        "createdAt":new Date(),
+        "updatedAt":new Date()
 
     }
     let qry = 'INSERT INTO contact SET ?';
@@ -61,7 +62,6 @@ exports.AddContacts = (req, res) => {
 };
 exports.GetContacts = (req, responce) => {
     const { id } = req.params
-    console.log(id)
     sql.query(`SELECT a.id, a.firstName, 
             a.lastName, a.mobile, a.avatar,a.email,
             b.isFavorites 
@@ -120,6 +120,28 @@ exports.RemoveToFavorites = (req, res) => {
         });
     });
 };
+
+exports.UpdateContacts = (req, res) => {
+    const {id}= req.params;
+    const {firstName, lastName,mobile,email } = req.body;
+
+    let qr;
+    if(req.file === undefined){
+        qr ='';
+    }else{
+        var path_file = 'public/Image/' + req.file.filename;
+        qr = `,avatar='${path_file}'`;
+    }
+    let query = `UPDATE contact SET  firstName='${firstName}', lastName='${lastName}',mobile='${mobile}', email='${email}' ${qr}  where id='${id}'`;
+    sql.query(query, function (err, result) {
+        if (err) throw err;
+        res.status(200).send({
+            status: true,
+            message: 'success updated',
+        });
+    });
+};
+
 
 
 

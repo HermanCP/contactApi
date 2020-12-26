@@ -5,7 +5,6 @@ const multer = require('multer')
 
 const storage = multer.memoryStorage();
 const upload = multer({
-    // storage,
     dest: "public/Image/",
   });
 
@@ -32,5 +31,10 @@ module.exports = app => {
     app.post(
         `${URL}/RemoveToFavorites`,
         constroller.RemoveToFavorites
+    );
+    app.put(
+        `${URL}/UpdateContacts/:id`,
+        upload.single('files'),
+        constroller.UpdateContacts
     );
 };
